@@ -1,12 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect} from 'react';
+import Sidebar from './Sidebar';
 
 function App() {
   const [isClockwise, setIsClockwise] = useState(true);
   const [iconSize, setIconSize] = useState(250);
   const [mouseEnterTime, setMouseEnterTime] = useState(null);
   const [mouseInactiveTime, setMouseInactiveTime] = useState(0);
+  const [showSidebar, setShowSidebar] = useState(true);
+  const [showCursorTracking,setShowCursorTracking] = useState()
 
   // For reversing the rotation direction of react icon
   const handleIconClick = () => {
@@ -56,10 +59,36 @@ function App() {
     };
   }, [mouseEnterTime]);
 
+  // for sidebar implementation
+  const toggleClockwise = () => {
+    setIsClockwise(prevIsClockwise => !prevIsClockwise);
+  };
+
+  const toggleIconSize = () => {
+    setIconSize(prevSize => (prevSize > 250 ? 250 : 400));
+  };
+
+  const toggleCursorTracking = () => {
+    setShowCursorTracking(prevTracking => !prevTracking);
+    setMouseEnterTime(null);
+    setMouseInactiveTime(0);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-
+    <div className={`sidebar ${showSidebar ? 'visible' : ''}`}>
+        {showSidebar && (
+          <Sidebar
+            isClockwise={isClockwise}
+            toggleClockwise={toggleClockwise}
+            iconSize={iconSize}
+            toggleIconSize={toggleIconSize}
+            cursorTracking={showCursorTracking}
+            toggleCursorTracking={toggleCursorTracking}
+          />
+        )}
+      </div>
+      <header className={`App-header ${showSidebar ? 'with-sidebar' : ''}`}>
         <img src={logo} className={`App-logo ${isClockwise ? 'clockwise' : 'anticlockwise'}`} alt="logo" style={{ width: iconSize, height: iconSize }} onClick={handleIconClick} />
         <p> Inactive Time of Cursor in Visible Page: {mouseInactiveTime / 1000} seconds</p>
       </header>

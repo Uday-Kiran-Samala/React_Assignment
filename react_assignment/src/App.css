@@ -49,3 +49,29 @@
 .anticlockwise {
   animation: anticlockwise infinite 20s linear;
 }
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  background-color: #282c34;
+  border-right: 1px solid #ccc;
+  transition: left 0.3s ease;
+  font-size: calc(5px + 2vmin);
+  color: white;
+}
+
+.sidebar.visible {
+  left: 0;
+}
+
+.App-header.with-sidebar {
+  margin-left: 250px;
+}
+
+.Togglebutton {
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
